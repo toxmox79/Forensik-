@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#e9eef4" />
+  <meta name="description" content="Forensische Analyse wissenschaftlicher Studien: Prompt erzeugen, KI-JSON auswerten, Bericht speichern und als PDF ausgeben." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="medizin.css" />
+  <title>Studien-Forensik v1.9 · Neomorph-Auswertung</title>
+</head>
+<body>
+  <header class="topbar no-print">
+    <div class="brand">
+      <img src="icon-192.png" alt="" class="brand-icon" />
+      <div>
+        <h1>Studien-Forensik <span style="font-size:.65em;opacity:.65">v1.9</span></h1>
+        <p>Methodik · Statistik · Historie · Wirkungsdauer · Selbstschutz · Stoffbiografie · Markt · Schwellenwerte</p>
+      </div>
+    </div>
+    <button id="installBtn" class="btn secondary" type="button" hidden>PWA installieren</button>
+  </header>
+
+  <main class="app-shell">
+    <nav class="steps no-print" aria-label="Arbeitsablauf">
+      <button class="step active" data-step="1" type="button"><span>1</span> Prompt</button>
+      <button class="step" data-step="2" type="button"><span>2</span> JSON</button>
+      <button class="step" data-step="3" type="button"><span>3</span> Bericht</button>
+      <button class="step" data-step="4" type="button"><span>4</span> Archiv</button>
+    </nav>
+
+    <section id="step1" class="panel step-panel active no-print">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">v1.9 · NEOMORPH · ALTERNATIVEN & EVIDENZLÜCKEN</span>
+          <h2>Was soll untersucht werden?</h2>
+          <p>Die PWA recherchiert nicht selbst. Sie erzeugt einen vollständigen Prompt für eine KI mit Web-/PDF-Zugriff. Fachbegriffe werden im Bericht auf Deutsch erklärt.</p>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <label class="field">
+          <span>Art der Anfrage</span>
+          <select id="queryType">
+            <option value="study">Studien-Link / DOI / PMID</option>
+            <option value="drug">Wirkstoff / Medikament</option>
+            <option value="vaccine">Impfstoff / Impfstoffprodukt</option>
+            <option value="topic">Thema / Behauptung</option>
+            <option value="title">Studientitel / Autor</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Analysemodus</span>
+          <select id="analysisMode">
+            <option value="forensic" selected>Forensisch – maximal</option>
+            <option value="critical">Kritisch – kompakter</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="field">
+        <span id="queryLabel">Link, DOI oder PMID</span>
+        <textarea id="queryInput" rows="3" placeholder="z. B. https://doi.org/... oder PMID 12345678"></textarea>
+      </label>
+
+      <div class="grid two">
+        <label class="field">
+          <span>Optional: konkrete Frage / Verdacht / Kontext</span>
+          <textarea id="focusInput" rows="4" placeholder="z. B. Wurde der primäre Endpunkt nachträglich geändert? Ist die behauptete Risikoreduktion klinisch relevant?"></textarea>
+        </label>
+        <fieldset class="check-card">
+          <legend>Zusätzliche Prüfungen</legend>
+          <label><input id="checkRegistry" type="checkbox" checked /> Register & Präregistrierung vergleichen</label>
+          <label><input id="checkAuthors" type="checkbox" checked /> Autoren, Finanzierung & Interessenkonflikte</label>
+          <label><input id="checkRetraction" type="checkbox" checked /> Korrekturen, offizielle Warnhinweise & zurückgezogene Studien</label>
+          <label><input id="checkReplication" type="checkbox" checked /> Wiederholungsstudien & widersprechende Ergebnisse</label>
+          <label><input id="checkMath" type="checkbox" checked /> Zahlen, Tabellen & Effektmaße nachrechnen</label>
+          <label><input id="checkSources" type="checkbox" checked /> Primärquellen priorisieren</label>
+          <label><input id="checkHistory" type="checkbox" checked /> Entstehung des Problems & Zeit vor der Intervention</label>
+          <label><input id="checkEffectDuration" type="checkbox" checked /> Wirkungsdauer & reale Anwendung im Zeitverlauf</label>
+          <label><input id="checkSelfProtection" type="checkbox" checked /> Körpereigener Selbstschutz & Anpassung</label>
+          <label><input id="checkLowCostAlternatives" type="checkbox" checked /> Günstige Alternativen & Hausmittel differenziert prüfen</label>
+          <label><input id="checkPredecessors" type="checkbox" checked /> Vorgänger, Patente & Marktwechsel prüfen</label>
+          <label><input id="checkThresholds" type="checkbox" checked /> Diagnose-/Risikoschwellen im Zeitverlauf prüfen</label>
+          <label><input id="checkSubstanceHistory" type="checkbox" checked /> Stoffbiografie & frühere Verwendungen prüfen</label>
+        </fieldset>
+      </div>
+
+      <div class="actions">
+        <button id="generatePromptBtn" class="btn primary" type="button">Forensischen Prompt erzeugen</button>
+        <button id="clearPromptBtn" class="btn ghost" type="button">Zurücksetzen</button>
+      </div>
+
+      <div id="promptBox" class="prompt-wrap" hidden>
+        <div class="prompt-toolbar">
+          <div>
+            <strong>Generierter Master-Prompt</strong>
+            <small>Erzwingt eine strukturierte JSON-Ausgabe für die Berichtsdarstellung.</small><span id="copyStatus" class="prompt-copy-status" aria-live="polite"></span>
+          </div>
+          <div class="toolbar-actions">
+            <button id="copyPromptBtn" class="btn secondary" type="button"><span class="copy-icon" aria-hidden="true">⧉</span><span id="copyPromptLabel">Prompt kopieren</span></button>
+            <button id="toJsonBtn" class="btn primary" type="button">Weiter zu JSON</button>
+          </div>
+        </div>
+        <textarea id="promptOutput" rows="24" spellcheck="false"></textarea>
+      </div>
+    </section>
+
+    <section id="step2" class="panel step-panel no-print">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">KI-Ergebnis</span>
+          <h2>JSON einfügen</h2>
+          <p>Füge die komplette JSON-Antwort der KI ein. Markdown-Codeblöcke werden automatisch entfernt.</p>
+        </div>
+      </div>
+
+      <label class="field">
+        <span>Analyse-JSON</span>
+        <textarea id="jsonInput" rows="26" placeholder='{"meta": {"title": "..."}, "verdict": {...}}' spellcheck="false"></textarea>
+      </label>
+      <div id="jsonStatus" class="status" aria-live="polite">Noch kein JSON geprüft.</div>
+      <div class="actions">
+        <button id="validateBtn" class="btn secondary" type="button">JSON prüfen</button>
+        <button id="renderBtn" class="btn primary" type="button">Bericht erzeugen</button>
+        <label class="btn ghost file-btn">JSON-Datei laden<input id="jsonFileInput" type="file" accept="application/json,.json" /></label>
+      </div>
+    </section>
+
+    <section id="step3" class="step-panel">
+      <div class="report-actions no-print">
+        <button id="saveAnalysisBtn" class="btn primary" type="button">Im Archiv speichern</button>
+        <button id="exportJsonBtn" class="btn secondary" type="button">JSON herunterladen</button>
+        <button id="printBtn" class="btn secondary" type="button">PDF / Drucken</button>
+        <button id="newAnalysisBtn" class="btn ghost" type="button">Neue Analyse</button>
+      </div>
+      <article id="report" class="report">
+        <div class="empty-report no-print">
+          <div class="empty-icon">⌕</div>
+          <h2>Noch kein Bericht</h2>
+          <p>Erzeuge zuerst einen Prompt und füge anschließend die JSON-Antwort der KI ein.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="step4" class="panel step-panel no-print">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Lokal gespeichert</span>
+          <h2>Analyse-Archiv</h2>
+          <p>Die Einträge liegen ausschließlich in diesem Browserprofil. Exportiere wichtige Analysen zusätzlich als JSON.</p>
+        </div>
+        <button id="clearArchiveBtn" class="btn danger" type="button">Archiv leeren</button>
+      </div>
+      <div id="archiveList" class="archive-list"></div>
+    </section>
+  </main>
+
+  <footer class="footer no-print">
+    <strong>Studien-Forensik</strong> ist ein Prüfwerkzeug, kein Wahrheitsautomat. Interessenkonflikte und statistische Auffälligkeiten werden ausdrücklich als Manipulations-/Beeinflussungsindikatoren ausgewiesen. Dabei wird zwischen Indiz und Nachweis unterschieden.
+  </footer>
+
+  <script src="medizin.js"></script>
+
+<script>try{if(new URLSearchParams(location.search).get('embedded')==='1')document.body.classList.add('embedded');}catch(e){}</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+Forensik-Zentrale PWA v1.1 – FLAT BUILD / OHNE ORDNER
+Alle Dateien liegen direkt im Hauptverzeichnis.
+Module: Medizin v1.9 · Alltag v1.1 · Nachrichten v1.0

@@ -1,0 +1,20 @@
+:root{
+  --bg:#e9eef5;--panel:#e9eef5;--text:#253044;--muted:#6c778b;--accent:#536dfe;
+  --shadow-out:10px 10px 22px #c5cad1,-10px -10px 22px #ffffff;
+  --shadow-soft:6px 6px 14px #c5cad1,-6px -6px 14px #ffffff;
+  --shadow-in:inset 4px 4px 9px #c7ccd3,inset -4px -4px 9px #ffffff;
+}
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{min-height:100vh;overflow:hidden}
+.shell-header{position:sticky;top:0;z-index:20;background:var(--bg);padding:12px 14px 10px;border-bottom:1px solid rgba(62,76,105,.08)}
+.brand-row{max-width:1500px;margin:auto;display:flex;align-items:center;gap:12px}
+.app-icon{width:44px;height:44px;border-radius:14px;box-shadow:var(--shadow-soft)}
+.brand-copy{min-width:0;flex:1}.brand-copy h1{font-size:20px;line-height:1.1;margin:0}.brand-copy h1 span{font-size:.62em;opacity:.58;font-weight:700}.brand-copy p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.install-btn{border:0;border-radius:15px;padding:10px 14px;background:var(--panel);box-shadow:var(--shadow-soft);color:var(--accent);font-weight:750;cursor:pointer}.install-btn:active{box-shadow:var(--shadow-in)}
+.main-tabs{max-width:1100px;margin:12px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tab{min-width:0;border:0;background:var(--panel);border-radius:18px;padding:10px 14px;box-shadow:var(--shadow-soft);display:flex;align-items:center;justify-content:center;gap:10px;color:var(--text);cursor:pointer;text-align:left;transition:.15s ease}
+.tab:hover{transform:translateY(-1px)}.tab:active{transform:none;box-shadow:var(--shadow-in)}.tab.active{box-shadow:var(--shadow-in);color:var(--accent)}
+.tab-icon{font-size:23px;line-height:1;width:28px;text-align:center}.tab b{display:block;font-size:14px}.tab small{display:block;font-size:10px;color:var(--muted);margin-top:2px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.workspace{height:calc(100vh - 128px);padding:8px 10px 10px}.panel{height:100%;max-width:1600px;margin:auto;border-radius:22px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow-soft)}.panel[hidden]{display:none}.panel iframe{border:0;width:100%;height:100%;display:block;background:var(--bg)}
+@media(max-width:720px){.shell-header{padding:9px 8px 8px}.brand-row{gap:9px}.app-icon{width:36px;height:36px;border-radius:11px}.brand-copy h1{font-size:17px}.brand-copy p{display:none}.install-btn{padding:8px 10px;font-size:12px}.main-tabs{gap:7px;margin-top:9px}.tab{padding:8px 6px;border-radius:15px;gap:5px;flex-direction:column;text-align:center}.tab-icon{font-size:20px}.tab b{font-size:12px}.tab small{display:none}.workspace{height:calc(100vh - 112px);padding:6px}.panel{border-radius:16px}}
+@media print{.shell-header{display:none}.workspace{height:auto;padding:0}.panel{box-shadow:none;border-radius:0}}

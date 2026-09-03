@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#e7edf3" />
+  <meta name="description" content="Alltags-Forensik: Behauptungen, Konflikte, Medienberichte und Alltagsthemen quellenkritisch prüfen, als JSON auswerten und als Bericht speichern." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="alltag.css" />
+  <title>Alltags-Forensik v1.1</title>
+</head>
+<body>
+  <header class="topbar no-print">
+    <div class="brand">
+      <img src="icon-192.png" alt="" class="brand-icon" />
+      <div>
+        <h1>Alltags-Forensik <span style="font-size:.65em;opacity:.65">v1.1</span></h1>
+        <p>Fakten · Primärquellen · Chronologie · Interessen · Widersprüche · Auslassungen · Propaganda · Unsicherheit</p>
+      </div>
+    </div>
+    <button id="installBtn" class="btn secondary" type="button" hidden>PWA installieren</button>
+  </header>
+
+  <main class="app-shell">
+    <nav class="steps no-print" aria-label="Arbeitsablauf">
+      <button class="step active" data-step="1" type="button"><span>1</span> Prompt</button>
+      <button class="step" data-step="2" type="button"><span>2</span> JSON</button>
+      <button class="step" data-step="3" type="button"><span>3</span> Bericht</button>
+      <button class="step" data-step="4" type="button"><span>4</span> Archiv</button>
+    </nav>
+
+    <section id="step1" class="panel step-panel active no-print">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">v1.1 · RED-TEAM · INTERNATIONALE GEGENRECHERCHE</span>
+          <h2>Was soll forensisch geprüft werden?</h2>
+          <p>Die PWA recherchiert nicht selbst. Sie erzeugt einen besonders strengen Recherche-Prompt für eine KI mit Web-/PDF-Zugriff. Ziel ist nicht „eine Seite zu bestätigen“, sondern Aussagen, Quellen, Interessen, Zeitabläufe und Informationslücken gegeneinander zu prüfen.</p>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <label class="field">
+          <span>Art der Untersuchung</span>
+          <select id="queryType">
+            <option value="conflict" selected>Konflikt / geopolitisches Ereignis</option>
+            <option value="claim">Behauptung / Aussage</option>
+            <option value="media">Medienbericht / URL / Video</option>
+            <option value="politics">Politische Entscheidung / Gesetz / Vertrag</option>
+            <option value="person">Person / Organisation / Unternehmen</option>
+            <option value="consumer">Verbraucher- / Alltagsthema</option>
+            <option value="history">Historische Behauptung / Ereignis</option>
+            <option value="other">Sonstiges Thema</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Analysemodus</span>
+          <select id="analysisMode">
+            <option value="max" selected>Forensisch – maximal</option>
+            <option value="compact">Forensisch – kompakter</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="field">
+        <span id="queryLabel">Konflikt / Ereignis / Fragestellung</span>
+        <textarea id="queryInput" rows="3" placeholder="z. B. Ukrainekonflikt: Ursachen, Vorgeschichte, Verhandlungen, Interessen, Kriegsverlauf, Zahlen und widersprüchliche Darstellungen"></textarea>
+      </label>
+
+      <div class="grid two">
+        <label class="field">
+          <span>Optional: Zeitraum / Region</span>
+          <textarea id="scopeInput" rows="3" placeholder="z. B. 1991 bis heute; Ukraine, Russland, NATO, EU, USA"></textarea>
+        </label>
+        <label class="field">
+          <span>Optional: konkrete Fragen / Verdacht / Schwerpunkt</span>
+          <textarea id="focusInput" rows="3" placeholder="z. B. Welche wichtigen Ereignisse fehlen in üblichen Chronologien? Welche Aussagen beider Seiten sind belegt, umstritten oder widerlegt?"></textarea>
+        </label>
+      </div>
+
+      <fieldset class="check-card">
+        <legend>Forensische Prüfungen</legend>
+        <label><input id="checkPrimary" type="checkbox" checked /> Primärquellen, Originaldokumente & Rohdaten priorisieren</label>
+        <label><input id="checkTimeline" type="checkbox" checked /> Lückenlose Chronologie & Vorgeschichte rekonstruieren</label>
+        <label><input id="checkAllSides" type="checkbox" checked /> Behauptungen aller relevanten Seiten getrennt prüfen</label>
+        <label><input id="checkOmissions" type="checkbox" checked /> Ausgelassene / unterbelichtete Fakten & Informationslücken suchen</label>
+        <label><input id="checkInterests" type="checkbox" checked /> Politische, wirtschaftliche, militärische & persönliche Interessen analysieren</label>
+        <label><input id="checkOwnership" type="checkbox" checked /> Eigentümer, Finanzierung & Abhängigkeiten von Quellen prüfen</label>
+        <label><input id="checkFraming" type="checkbox" checked /> Wortwahl, Framing, Euphemismen & emotionalisierende Sprache vergleichen</label>
+        <label><input id="checkPropaganda" type="checkbox" checked /> Propaganda-, Desinformations- & Informationsoperations-Indizien prüfen</label>
+        <label><input id="checkNumbers" type="checkbox" checked /> Zahlen, Opferangaben, Umfragen & Statistiken methodisch vergleichen</label>
+        <label><input id="checkLaw" type="checkbox" checked /> Verträge, Gesetze, Resolutionen & rechtliche Positionen im Original prüfen</label>
+        <label><input id="checkOsint" type="checkbox" checked /> Bilder, Videos, Satelliten-/OSINT-Befunde auf Herkunft und Kontext prüfen</label>
+        <label><input id="checkChanged" type="checkbox" checked /> Gelöschte, geänderte, korrigierte oder archivierte Aussagen berücksichtigen</label>
+        <label><input id="checkCensorship" type="checkbox" checked /> Zugangsbeschränkungen, Zensur & Plattformmoderation dokumentieren</label>
+        <label><input id="checkHistory" type="checkbox" checked /> Historische Vorläufer, gebrochene Zusagen & frühere Verhandlungen prüfen</label>
+        <label><input id="checkEconomics" type="checkbox" checked /> Geldflüsse, Sanktionen, Rohstoffe, Rüstung & wirtschaftliche Gewinner/Verlierer prüfen</label>
+        <label><input id="checkCounterevidence" type="checkbox" checked /> Stärkste Gegenbelege aktiv suchen und darstellen</label>
+        <label><input id="checkRedTeam" type="checkbox" checked /> Pflicht-Red-Team: erste Schlussfolgerung in einer zweiten Recherchephase gezielt zu widerlegen versuchen</label>
+        <label><input id="checkInternational" type="checkbox" checked /> Internationale & anderssprachige Gegenrecherche bei einseitiger, blockierter oder lückenhafter Quellenlage</label>
+      </fieldset>
+
+      <div class="explain-box"><strong>Wichtig:</strong> „Alle Fakten“ kann nur bedeuten: alle belastbar auffindbaren und prüfbaren Fakten aus zugänglichen Quellen. Geheime, nie dokumentierte oder nicht zugängliche Informationen dürfen nicht erfunden werden. Die KI muss solche Bereiche ausdrücklich als <em>unbekannt / nicht feststellbar</em> markieren.</div>
+      <div class="explain-box"><strong>Pflicht-Red-Team:</strong> Nach der ersten vollständigen Analyse muss die KI ihre eigene vorläufige Schlussfolgerung als möglicherweise falsch behandeln und eine zweite, gezielt widerlegende Recherche durchführen. Technische, rechtliche, regionale oder modellbedingte Zugriffsbeschränkungen müssen separat dokumentiert werden; eine Zugriffsbeschränkung ist nicht automatisch ein Beweis für Zensur.</div>
+
+      <div class="actions">
+        <button id="generatePromptBtn" class="btn primary" type="button">Forensischen Prompt erzeugen</button>
+        <button id="clearPromptBtn" class="btn ghost" type="button">Zurücksetzen</button>
+      </div>
+
+      <div id="promptBox" class="prompt-wrap" hidden>
+        <div class="prompt-toolbar">
+          <div>
+            <strong>Generierter Master-Prompt</strong>
+            <small>Fordert Primärquellen, Gegenprüfung und eine strukturierte JSON-Ausgabe im Codeblock.</small>
+            <span id="copyStatus" class="prompt-copy-status" aria-live="polite"></span>
+          </div>
+          <div class="toolbar-actions">
+            <button id="copyPromptBtn" class="btn secondary" type="button"><span class="copy-icon" aria-hidden="true">⧉</span><span id="copyPromptLabel">Prompt kopieren</span></button>
+            <button id="toJsonBtn" class="btn primary" type="button">Weiter zu JSON</button>
+          </div>
+        </div>
+        <textarea id="promptOutput" rows="28" spellcheck="false"></textarea>
+      </div>
+    </section>
+
+    <section id="step2" class="panel step-panel no-print">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">KI-Ergebnis</span>
+          <h2>JSON einfügen</h2>
+          <p>Füge den vollständigen <code>json</code>-Codeblock der KI ein. Die PWA entfernt die Markdown-Markierungen automatisch.</p>
+        </div>
+      </div>
+      <label class="field"><span>Forensik-JSON</span><textarea id="jsonInput" rows="28" placeholder='```json&#10;{"meta":{"title":"..."},"verdict":{...}}&#10;```' spellcheck="false"></textarea></label>
+      <div id="jsonStatus" class="status" aria-live="polite">Noch kein JSON geprüft.</div>
+      <div class="actions">
+        <button id="validateBtn" class="btn secondary" type="button">JSON prüfen</button>
+        <button id="renderBtn" class="btn primary" type="button">Bericht erzeugen</button>
+        <label class="btn ghost file-btn">JSON-Datei laden<input id="jsonFileInput" type="file" accept="application/json,.json" /></label>
+      </div>
+    </section>
+
+    <section id="step3" class="step-panel">
+      <div class="report-actions no-print">
+        <button id="saveAnalysisBtn" class="btn primary" type="button">Im Archiv speichern</button>
+        <button id="exportJsonBtn" class="btn secondary" type="button">JSON herunterladen</button>
+        <button id="printBtn" class="btn secondary" type="button">PDF / Drucken</button>
+        <button id="newAnalysisBtn" class="btn ghost" type="button">Neue Analyse</button>
+      </div>
+      <article id="report" class="report">
+        <div class="empty-report no-print"><div class="empty-icon">⌕</div><h2>Noch kein Bericht</h2><p>Erzeuge zuerst einen Prompt und füge anschließend das JSON-Ergebnis ein.</p></div>
+      </article>
+    </section>
+
+    <section id="step4" class="panel step-panel no-print">
+      <div class="section-head">
+        <div><span class="eyebrow">Lokal gespeichert</span><h2>Analyse-Archiv</h2><p>Gespeichert wird nur in diesem Browserprofil. Für wichtige Analysen zusätzlich JSON exportieren.</p></div>
+        <button id="clearArchiveBtn" class="btn danger" type="button">Archiv leeren</button>
+      </div>
+      <div id="archiveList" class="archive-list"></div>
+    </section>
+  </main>
+
+  <footer class="footer no-print"><strong>Alltags-Forensik</strong> ist ein Prüfwerkzeug, kein Wahrheitsautomat. Es trennt gesicherte Fakten, wahrscheinliche Befunde, Streitpunkte, unbelegte Behauptungen, Widerlegtes und Unbekanntes. Politische oder mediale Zugehörigkeit ersetzt nie die Quellenprüfung.</footer>
+  <script src="alltag.js"></script>
+
+<script>try{if(new URLSearchParams(location.search).get('embedded')==='1')document.body.classList.add('embedded');}catch(e){}</script>
+</body>
+</html>

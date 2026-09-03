@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#e9eef5" />
+  <meta name="description" content="Forensik-Zentrale: Medizin-, Alltags- und Nachrichten-Forensik in einer PWA." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Forensik-Zentrale</title>
+</head>
+<body>
+  <header class="shell-header">
+    <div class="brand-row">
+      <img src="icon-192.png" class="app-icon" alt="" />
+      <div class="brand-copy">
+        <h1>Forensik-Zentrale <span>v1.1</span></h1>
+        <p>Drei spezialisierte Prüfwerkzeuge in einer App</p>
+      </div>
+      <button id="installBtn" class="install-btn" type="button" hidden>Installieren</button>
+    </div>
+    <nav class="main-tabs" role="tablist" aria-label="Forensik-Bereich">
+      <button class="tab active" role="tab" aria-selected="true" aria-controls="panel-medizin" data-tab="medizin">
+        <span class="tab-icon">⚕</span><span><b>Medizin</b><small>Studien · Wirkstoffe · Risiken</small></span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-alltag" data-tab="alltag">
+        <span class="tab-icon">⌕</span><span><b>Alltag</b><small>Behauptungen · Konflikte · Red Team</small></span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" aria-controls="panel-nachrichten" data-tab="nachrichten">
+        <span class="tab-icon">▤</span><span><b>Nachrichten</b><small>Framing · Quellen · Rechtslage</small></span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="workspace">
+    <section id="panel-medizin" class="panel active" role="tabpanel" aria-label="Medizin-Forensik">
+      <iframe title="Medizin-Forensik" src="medizin.html?embedded=1"></iframe>
+    </section>
+    <section id="panel-alltag" class="panel" role="tabpanel" aria-label="Alltags-Forensik" hidden>
+      <iframe title="Alltags-Forensik" src="alltag.html?embedded=1"></iframe>
+    </section>
+    <section id="panel-nachrichten" class="panel" role="tabpanel" aria-label="Nachrichten-Forensik" hidden>
+      <iframe title="Nachrichten-Forensik" src="nachrichten.html?embedded=1"></iframe>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

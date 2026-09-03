@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#e7edf3" />
+  <meta name="description" content="Nachrichten-Forensik: Meldungen entschlüsseln, Quellen-Ursprung, Framing, Experten, Rechtsgrundlage und internationale Berichterstattung prüfen." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="stylesheet" href="nachrichten.css" />
+  <title>Nachrichten-Forensik v1.0</title>
+</head>
+<body>
+  <header class="topbar no-print">
+    <div class="brand"><img src="icon-192.png" alt="" class="brand-icon" /><div><h1>Nachrichten-Forensik <span style="font-size:.65em;opacity:.65">v1.0</span></h1><p>Quelle entschlüsseln · Framing erkennen · Experten prüfen · Rechtslage klären · Ausland vergleichen</p></div></div>
+    <button id="installBtn" class="btn secondary" type="button" hidden>PWA installieren</button>
+  </header>
+
+  <main class="app-shell">
+    <nav class="steps no-print" aria-label="Arbeitsablauf">
+      <button class="step active" data-step="1" type="button"><span>1</span> Meldung</button>
+      <button class="step" data-step="2" type="button"><span>2</span> JSON</button>
+      <button class="step" data-step="3" type="button"><span>3</span> Entschlüsselt</button>
+      <button class="step" data-step="4" type="button"><span>4</span> Archiv</button>
+    </nav>
+
+    <section id="step1" class="panel step-panel active no-print">
+      <div class="section-head"><div><span class="eyebrow">v1.0 · NACHRICHTEN-FORENSIK · RED TEAM · INTERNATIONAL</span><h2>Welche Nachricht soll entschlüsselt werden?</h2><p>Link, Überschrift, Artikeltext oder eine Behauptung eingeben. Die App erzeugt einen Recherche-Prompt für eine KI mit Webzugriff. Die KI soll nicht nur nacherzählen, sondern den Ursprung der Meldung, unabhängige Belege, Framing, Experten, Rechtsgrundlage und ausländische Berichterstattung prüfen.</p></div></div>
+
+      <div class="grid two">
+        <label class="field"><span>Eingabeart</span><select id="queryType"><option value="article" selected>Nachrichtenartikel / Link</option><option value="headline">Überschrift / Push-Meldung</option><option value="claim">Einzelne Behauptung aus Nachrichten</option><option value="proposal">Angekündigte politische Maßnahme / Einführung</option><option value="expert">Aussage eines Experten / Wissenschaftlers</option><option value="topic">Nachrichtenthema allgemein</option></select></label>
+        <label class="field"><span>Prüftiefe</span><select id="analysisMode"><option value="max" selected>Forensisch – maximal</option><option value="compact">Forensisch – kompakt</option></select></label>
+      </div>
+
+      <label class="field"><span id="queryLabel">Link / Überschrift / Nachricht</span><textarea id="queryInput" rows="4" placeholder="z. B. URL oder Überschrift einer Meldung"></textarea></label>
+      <label class="field"><span>Optional: Artikeltext / relevante Passage</span><textarea id="articleText" rows="7" placeholder="Falls vorhanden: Artikeltext oder die entscheidende Passage hier einfügen. Das hilft besonders bei Framing-, Überschriften- und Zitatprüfung."></textarea></label>
+
+      <div class="grid two">
+        <label class="field"><span>Optional: Länder für Gegenvergleich</span><textarea id="countriesInput" rows="3" placeholder="z. B. Frankreich, Polen, USA, Russland, Indien. Leer = automatisch relevante Länder und Gegenperspektiven wählen."></textarea></label>
+        <label class="field"><span>Optional: Was macht dich stutzig?</span><textarea id="focusInput" rows="3" placeholder="z. B. angeblicher Wissenschaftler unbekannt; keine Rechtsgrundlage genannt; alle Artikel berufen sich auf Reuters; stark suggestive Überschrift"></textarea></label>
+      </div>
+
+      <fieldset class="check-card"><legend>Was soll zwingend geprüft werden?</legend>
+        <label><input id="checkOrigin" type="checkbox" checked /> Quellen-Stammbaum bis zur frühesten Ursprungsquelle</label>
+        <label><input id="checkIndependence" type="checkbox" checked /> Wirklich unabhängige Bestätigungen statt Agentur-Kopien zählen</label>
+        <label><input id="checkFraming" type="checkbox" checked /> Framing, Suggestion, Vorannahmen, Euphemismen & emotionale Wörter</label>
+        <label><input id="checkHeadline" type="checkbox" checked /> Überschrift gegen Inhalt und Originalquelle prüfen</label>
+        <label><input id="checkClaims" type="checkbox" checked /> Jede zentrale Tatsachenbehauptung einzeln verifizieren</label>
+        <label><input id="checkExperts" type="checkbox" checked /> Genannte Wissenschaftler/Experten: Identität, Fachgebiet, Eignung, Interessen</label>
+        <label><input id="checkLaw" type="checkbox" checked /> Bei angekündigten Maßnahmen: konkrete Rechtsgrundlage & Umsetzbarkeit</label>
+        <label><input id="checkInternational" type="checkbox" checked /> Ausländische und anderssprachige Berichte zum selben Ereignis suchen</label>
+        <label><input id="checkOmissions" type="checkbox" checked /> Wichtige ausgelassene Fakten und Gegenpositionen suchen</label>
+        <label><input id="checkNumbers" type="checkbox" checked /> Zahlen, Prozentwerte, Umfragen, Nenner und Vergleichszeiträume prüfen</label>
+        <label><input id="checkQuotes" type="checkbox" checked /> Zitate bis zum vollständigen Original zurückverfolgen</label>
+        <label><input id="checkOwnership" type="checkbox" checked /> Eigentümer, Agenturbezug, Finanzierung und mögliche Interessen der Quellen</label>
+        <label><input id="checkImages" type="checkbox" checked /> Bilder/Videos auf Ursprung, Datum und Kontext prüfen, soweit relevant</label>
+        <label><input id="checkTimeline" type="checkbox" checked /> Ereignisdatum, Veröffentlichungszeit und Vorgeschichte sauber trennen</label>
+        <label><input id="checkRedTeam" type="checkbox" checked /> Pflicht-Red-Team: erste Analyse anschließend gezielt widerlegen</label>
+        <label><input id="checkAccess" type="checkbox" checked /> Zugriffs-/Modellgrenzen kennzeichnen und internationale/archivierte Alternativen suchen</label>
+      </fieldset>
+
+      <div class="explain-box"><strong>Agentur-Kopien:</strong> Zehn Artikel, die dieselbe Reuters-, AP-, AFP- oder dpa-Meldung übernehmen, sind nicht zehn unabhängige Belege. Der Prompt verlangt einen Quellen-Stammbaum und zählt die tatsächlichen Ursprungsquellen.</div>
+      <div class="explain-box"><strong>Rechtliche Machbarkeit:</strong> „Minister fordert“, „Experten wollen“ oder „soll eingeführt werden“ bedeutet noch nicht, dass etwas beschlossen oder rechtlich möglich ist. Zuständigkeit, Gesetzesgrundlage, notwendiges Verfahren, Mehrheiten, Verordnungsbefugnis und mögliche Gerichtsgrenzen werden getrennt geprüft.</div>
+      <div class="explain-box"><strong>Auslandsspiegel:</strong> Die KI soll nicht nur dieselbe Meldung auf anderen Websites suchen, sondern prüfen, wie das Ereignis in betroffenen Ländern, Nachbarstaaten, geopolitischen Gegenlagern und möglichst auch in Drittstaaten dargestellt wird – inklusive Informationen, die im deutschen Bericht fehlen.</div>
+
+      <div class="actions"><button id="generatePromptBtn" class="btn primary" type="button">Nachrichten-Prüfprompt erzeugen</button><button id="clearPromptBtn" class="btn ghost" type="button">Zurücksetzen</button></div>
+
+      <div id="promptBox" class="prompt-wrap" hidden>
+        <div class="prompt-toolbar"><div><strong>Generierter Master-Prompt</strong><small>Für eine KI mit Web-/PDF-Zugriff. Ausgabe als valides JSON im Codeblock.</small><span id="copyStatus" class="prompt-copy-status" aria-live="polite"></span></div><div class="toolbar-actions"><button id="copyPromptBtn" class="btn secondary" type="button"><span class="copy-icon" aria-hidden="true">⧉</span><span id="copyPromptLabel">Prompt kopieren</span></button><button id="toJsonBtn" class="btn primary" type="button">Weiter zu JSON</button></div></div>
+        <textarea id="promptOutput" rows="32" spellcheck="false"></textarea>
+      </div>
+    </section>
+
+    <section id="step2" class="panel step-panel no-print">
+      <div class="section-head"><div><span class="eyebrow">KI-Ergebnis</span><h2>JSON einfügen</h2><p>Den vollständigen <code>json</code>-Codeblock der KI einfügen. Markdown-Markierungen werden automatisch entfernt.</p></div></div>
+      <label class="field"><span>Nachrichten-Forensik-JSON</span><textarea id="jsonInput" rows="30" placeholder='```json&#10;{"meta":{"title":"..."},"summary":{...}}&#10;```' spellcheck="false"></textarea></label>
+      <div id="jsonStatus" class="status" aria-live="polite">Noch kein JSON geprüft.</div>
+      <div class="actions"><button id="validateBtn" class="btn secondary" type="button">JSON prüfen</button><button id="renderBtn" class="btn primary" type="button">Meldung entschlüsseln</button><label class="btn ghost file-btn">JSON-Datei laden<input id="jsonFileInput" type="file" accept="application/json,.json" /></label></div>
+    </section>
+
+    <section id="step3" class="step-panel">
+      <div class="report-actions no-print"><button id="saveAnalysisBtn" class="btn primary" type="button">Im Archiv speichern</button><button id="exportJsonBtn" class="btn secondary" type="button">JSON herunterladen</button><button id="printBtn" class="btn secondary" type="button">PDF / Drucken</button><button id="newAnalysisBtn" class="btn ghost" type="button">Neue Meldung</button></div>
+      <article id="report" class="report"><div class="empty-report no-print"><div class="empty-icon">⌕</div><h2>Noch keine Meldung entschlüsselt</h2><p>Erzeuge zuerst den Prompt und füge anschließend die JSON-Ausgabe ein.</p></div></article>
+    </section>
+
+    <section id="step4" class="panel step-panel no-print"><div class="section-head"><div><span class="eyebrow">Lokal gespeichert</span><h2>Nachrichten-Archiv</h2><p>Analysen werden in diesem Browserprofil gespeichert. Wichtige Berichte zusätzlich als JSON exportieren.</p></div><button id="clearArchiveBtn" class="btn danger" type="button">Archiv leeren</button></div><div id="archiveList" class="archive-list"></div></section>
+  </main>
+  <footer class="footer no-print"><strong>Nachrichten-Forensik</strong> trennt nachprüfbare Tatsachen, Zuschreibungen, Deutungen, Prognosen und Forderungen. Eine oft wiederholte Agenturmeldung ist keine unabhängige Mehrfachbestätigung; ein unbekannter Punkt ist nicht automatisch falsch und eine Zugriffsbeschränkung ist nicht automatisch Zensur.</footer>
+  <script src="nachrichten.js"></script>
+
+<script>try{if(new URLSearchParams(location.search).get('embedded')==='1')document.body.classList.add('embedded');}catch(e){}</script>
+</body>
+</html>
