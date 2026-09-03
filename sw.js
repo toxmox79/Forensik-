@@ -1,6 +1,6 @@
-const CACHE='forensik-zentrale-v1.1-flat';
+const CACHE='forensik-zentrale-v1.2-flat';
 const CORE=[
- './','./index.html','./styles.css','./app.js','./manifest.webmanifest','./icon-192.png','./icon-512.png',
+ './','./index.html','./styles.css','./app.js','./ai.css','./ai-client.js','./manifest.webmanifest','./icon-192.png','./icon-512.png',
  './medizin.html','./medizin.css','./medizin.js',
  './alltag.html','./alltag.css','./alltag.js',
  './nachrichten.html','./nachrichten.css','./nachrichten.js'

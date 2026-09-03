@@ -9,6 +9,7 @@
   <link rel="icon" href="icon-192.png" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="stylesheet" href="nachrichten.css" />
+  <link rel="stylesheet" href="ai.css" />
   <title>Nachrichten-Forensik v1.0</title>
 </head>
 <body>
@@ -26,7 +27,7 @@
     </nav>
 
     <section id="step1" class="panel step-panel active no-print">
-      <div class="section-head"><div><span class="eyebrow">v1.0 · NACHRICHTEN-FORENSIK · RED TEAM · INTERNATIONAL</span><h2>Welche Nachricht soll entschlüsselt werden?</h2><p>Link, Überschrift, Artikeltext oder eine Behauptung eingeben. Die App erzeugt einen Recherche-Prompt für eine KI mit Webzugriff. Die KI soll nicht nur nacherzählen, sondern den Ursprung der Meldung, unabhängige Belege, Framing, Experten, Rechtsgrundlage und ausländische Berichterstattung prüfen.</p></div></div>
+      <div class="section-head"><div><span class="eyebrow">v1.0 · NACHRICHTEN-FORENSIK · RED TEAM · INTERNATIONAL</span><h2>Welche Nachricht soll entschlüsselt werden?</h2><p>Link, Überschrift, Artikeltext oder eine Behauptung eingeben. Im manuellen Modus erzeugt die App den Recherche-Prompt wie bisher; im integrierten KI-Modus kann sie optional selbst Webquellen suchen und die Analyse direkt durchführen. Geprüft werden Ursprung der Meldung, unabhängige Belege, Framing, Experten, Rechtsgrundlage und ausländische Berichterstattung.</p></div></div>
 
       <div class="grid two">
         <label class="field"><span>Eingabeart</span><select id="queryType"><option value="article" selected>Nachrichtenartikel / Link</option><option value="headline">Überschrift / Push-Meldung</option><option value="claim">Einzelne Behauptung aus Nachrichten</option><option value="proposal">Angekündigte politische Maßnahme / Einführung</option><option value="expert">Aussage eines Experten / Wissenschaftlers</option><option value="topic">Nachrichtenthema allgemein</option></select></label>
@@ -88,6 +89,8 @@
   </main>
   <footer class="footer no-print"><strong>Nachrichten-Forensik</strong> trennt nachprüfbare Tatsachen, Zuschreibungen, Deutungen, Prognosen und Forderungen. Eine oft wiederholte Agenturmeldung ist keine unabhängige Mehrfachbestätigung; ein unbekannter Punkt ist nicht automatisch falsch und eine Zugriffsbeschränkung ist nicht automatisch Zensur.</footer>
   <script src="nachrichten.js"></script>
+  <script>window.FORENSIK_MODULE="nachrichten";</script>
+  <script src="ai-client.js"></script>
 
 <script>try{if(new URLSearchParams(location.search).get('embedded')==='1')document.body.classList.add('embedded');}catch(e){}</script>
 </body>

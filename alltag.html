@@ -9,6 +9,7 @@
   <link rel="icon" href="icon-192.png" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="stylesheet" href="alltag.css" />
+  <link rel="stylesheet" href="ai.css" />
   <title>Alltags-Forensik v1.1</title>
 </head>
 <body>
@@ -36,7 +37,7 @@
         <div>
           <span class="eyebrow">v1.1 · RED-TEAM · INTERNATIONALE GEGENRECHERCHE</span>
           <h2>Was soll forensisch geprüft werden?</h2>
-          <p>Die PWA recherchiert nicht selbst. Sie erzeugt einen besonders strengen Recherche-Prompt für eine KI mit Web-/PDF-Zugriff. Ziel ist nicht „eine Seite zu bestätigen“, sondern Aussagen, Quellen, Interessen, Zeitabläufe und Informationslücken gegeneinander zu prüfen.</p>
+          <p>Im manuellen Modus erzeugt die PWA den besonders strengen Recherche-Prompt wie bisher. Im integrierten KI-Modus kann sie Recherche, Analyse und Red-Team-Gegenprüfung über deine API-Zugänge selbst ausführen. Ziel ist nicht „eine Seite zu bestätigen“, sondern Aussagen, Quellen, Interessen, Zeitabläufe und Informationslücken gegeneinander zu prüfen.</p>
         </div>
       </div>
 
@@ -165,6 +166,8 @@
 
   <footer class="footer no-print"><strong>Alltags-Forensik</strong> ist ein Prüfwerkzeug, kein Wahrheitsautomat. Es trennt gesicherte Fakten, wahrscheinliche Befunde, Streitpunkte, unbelegte Behauptungen, Widerlegtes und Unbekanntes. Politische oder mediale Zugehörigkeit ersetzt nie die Quellenprüfung.</footer>
   <script src="alltag.js"></script>
+  <script>window.FORENSIK_MODULE="alltag";</script>
+  <script src="ai-client.js"></script>
 
 <script>try{if(new URLSearchParams(location.search).get('embedded')==='1')document.body.classList.add('embedded');}catch(e){}</script>
 </body>

@@ -9,6 +9,7 @@
   <link rel="icon" href="icon-192.png" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="stylesheet" href="medizin.css" />
+  <link rel="stylesheet" href="ai.css" />
   <title>Studien-Forensik v1.9 · Neomorph-Auswertung</title>
 </head>
 <body>
@@ -36,7 +37,7 @@
         <div>
           <span class="eyebrow">v1.9 · NEOMORPH · ALTERNATIVEN & EVIDENZLÜCKEN</span>
           <h2>Was soll untersucht werden?</h2>
-          <p>Die PWA recherchiert nicht selbst. Sie erzeugt einen vollständigen Prompt für eine KI mit Web-/PDF-Zugriff. Fachbegriffe werden im Bericht auf Deutsch erklärt.</p>
+          <p>Im manuellen Modus erzeugt die PWA den vollständigen Prompt wie bisher. Im integrierten KI-Modus kann sie die Analyse – optional mit Webrecherche und zweiter Red-Team-Phase – selbst über deine API-Zugänge ausführen. Fachbegriffe werden im Bericht auf Deutsch erklärt.</p>
         </div>
       </div>
 
@@ -163,6 +164,8 @@
   </footer>
 
   <script src="medizin.js"></script>
+  <script>window.FORENSIK_MODULE="medizin";</script>
+  <script src="ai-client.js"></script>
 
 <script>try{if(new URLSearchParams(location.search).get('embedded')==='1')document.body.classList.add('embedded');}catch(e){}</script>
 </body>

@@ -1,3 +1,8 @@
-Forensik-Zentrale PWA v1.1 – FLAT BUILD / OHNE ORDNER
-Alle Dateien liegen direkt im Hauptverzeichnis.
+Forensik-Zentrale PWA v1.2
+Build: 2026-09-03
 Module: Medizin v1.9 · Alltag v1.1 · Nachrichten v1.0
+Hybridmodus: Manuell + integrierte KI
+Provider: OpenRouter · Gemini · Groq
+Optionale Webrecherche: Tavily
+Optionale sichere Schlüsselablage: eigener Proxy / Cloudflare Worker
+Struktur: vollständig flach, keine Unterordner
